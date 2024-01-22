@@ -57,13 +57,15 @@ class Account {
 class Order {
   payment = null;
   lineItems = [];
-  constructor(number, ordered, shipped, ship_to, status, total) {
+  total = 0;
+  shipped = "";
+  constructor(number, ordered, ship_to, status) {
     this.number = number;
     this.ordered = ordered;
-    this.shipped = shipped;
+    // this.shipped = shipped;
     this.ship_to = ship_to;
     this.status = status;
-    this.total = total;
+    // this.total = total;
   }
 
   setPayment(payment) {
@@ -72,6 +74,18 @@ class Order {
 
   addLineItem(lineItem) {
     this.lineItems.push(lineItem);
+  }
+
+  setTotal() {
+    let total = 0;
+    for (let i = 0; i < this.lineItems.length; i++) {
+      total += this.lineItems[i].quantity * this.lineItems[i].price;
+    }
+    this.total = total;
+  }
+
+  setShippedDate(date) {
+    this.shipped = date;
   }
 }
 
@@ -152,19 +166,10 @@ const main = () => {
   const order1 = new Order(
     "O01",
     "2024/01/12",
-    "2024/01/13",
     "SanSukDorm",
-    OrderStatus.DELIVERIED,
-    ""
+    OrderStatus.DELIVERIED
   );
-  const order2 = new Order(
-    "O01",
-    "2024/01/22",
-    "2024/01/23",
-    "SanSukDorm",
-    OrderStatus.HOLD,
-    ""
-  );
+  const order2 = new Order("O01", "2024/01/22", "SanSukDorm", OrderStatus.HOLD);
 
   const line1 = new LineItem(10, 15);
   const line2 = new LineItem(20, 20);
@@ -192,7 +197,13 @@ const main = () => {
   user1.setShoppingCart(shoppingCart1);
   user2.setShoppingCart(shoppingCart2);
 
-  console.log(user1.shoppingCart.lineItems);
+  const payment1 = new Payment("P01", "2024/01/22", order1.total, "Deliveried");
+  order1.setPayment(payment1);
+
+  order1.setTotal;
+  order1.setShippedDate("2024/01/22");
+
+  console.log(order1);
   console.log(user2);
 };
 main();
