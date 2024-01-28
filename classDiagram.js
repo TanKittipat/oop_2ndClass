@@ -229,7 +229,9 @@ const main = () => {
   // Set shipped date in Order Class
   order1.setShippedDate("2024/01/22");
 
-  console.log(order1);
-  console.log(user2);
+  console.log(user1);
+  console.log(user1.customer);
+  console.log(user1.shoppingCart);
+  console.log(user1.shoppingCart.lineItems);
 };
 main();
