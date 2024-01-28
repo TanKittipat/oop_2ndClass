@@ -154,15 +154,27 @@ class OrderStatus {
 }
 
 const main = () => {
+  // Create User
   const user1 = new WebUser("user1", "123456", UserState.NEW);
   const user2 = new WebUser("user2", "999999", UserState.ACTIVE);
 
+  // Create Customer
+  const cus1 = new Customer("C01", "London", "0000000000", "example@mail.com");
+  const cus2 = new Customer(
+    "C02",
+    "South Dakota",
+    "1212312121",
+    "example@mail.com"
+  );
+
+  // Create Product
   const product1 = new Product("P01", "Pencil", "SubBro");
   const product2 = new Product("P02", "Pen", "SubBro");
   const product3 = new Product("P03", "Eraser", "SubBro");
   const product4 = new Product("P04", "Ruler", "SubBro");
   const product5 = new Product("P05", "Ink_Pen", "SubBro");
 
+  // Create Order
   const order1 = new Order(
     "O01",
     "2024/01/12",
@@ -171,36 +183,50 @@ const main = () => {
   );
   const order2 = new Order("O01", "2024/01/22", "SanSukDorm", OrderStatus.HOLD);
 
+  // Create Line Item
   const line1 = new LineItem(10, 15);
   const line2 = new LineItem(20, 20);
   const line3 = new LineItem(30, 25);
   const line4 = new LineItem(40, 30);
 
+  // Create Shopping Cart
   const shoppingCart1 = new ShoppingCart("2024/01/12");
   const shoppingCart2 = new ShoppingCart("2024/01/22");
 
+  // Add Product to Line Item
   line1.setProduct(product1);
   line2.setProduct(product2);
   line3.setProduct(product3);
   line4.setProduct(product4);
 
+  // Add Line Item to Order
   order1.addLineItem(line1);
   order1.addLineItem(line2);
   order2.addLineItem(line3);
   order2.addLineItem(line3);
 
+  // Add Line Item to Shopping Cart
   shoppingCart1.addLineItem(line1);
   shoppingCart1.addLineItem(line2);
   shoppingCart2.addLineItem(line3);
   shoppingCart2.addLineItem(line4);
 
+  // Set Shopping Cart to User
   user1.setShoppingCart(shoppingCart1);
   user2.setShoppingCart(shoppingCart2);
 
+  // Set Customer to User
+  user1.setCustomer(cus1);
+  user2.setCustomer(cus2);
+
+  // Create Payment and Set to Order
   const payment1 = new Payment("P01", "2024/01/22", order1.total, "Deliveried");
   order1.setPayment(payment1);
 
+  // Use Function in Order Class
   order1.setTotal;
+
+  // Set shipped date in Order Class
   order1.setShippedDate("2024/01/22");
 
   console.log(order1);
