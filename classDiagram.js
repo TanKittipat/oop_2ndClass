@@ -53,6 +53,13 @@ class Account {
   addOrder(order) {
     this.orders.push(order);
   }
+
+  printOrder() {
+    for (let i = 0; i < this.orders.length; i++) {
+      console.log("คำสั่งซื้อที่ : " + (i + 1));
+      this.orders[i].printDetail();
+    }
+  }
 }
 
 class Order {
@@ -253,10 +260,13 @@ const main = () => {
 
   // Use Function in Order Class
   order1.setTotal();
+  order2.setTotal();
 
   // Create Payment and Set to Order
   const payment1 = new Payment("P01", "2024/01/22", order1.total, "Deliveried");
   order1.setPayment(payment1);
+  const payment2 = new Payment("P02", "2024/02/05", order2.total, "Deliveried");
+  order2.setPayment(payment2);
 
   // Set shipped date in Order Class
   order1.setShippedDate("2024/01/22");
@@ -267,6 +277,6 @@ const main = () => {
   account1.addOrder(order2);
   console.log("ชื่อ : " + account1.id);
   console.log("จำนวนคำสั่งซื้อ : " + account1.orders.length + " รายการ");
-  order1.printDetail();
+  account1.printOrder();
 };
 main();
