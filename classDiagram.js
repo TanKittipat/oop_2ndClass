@@ -34,7 +34,8 @@ class Account {
   shoppingCart = null;
   payments = [];
   orders = [];
-  constructor(billing_address, is_closed, open, closed) {
+  constructor(id, billing_address, is_closed, open, closed) {
+    this.id = id;
     this.billing_address = billing_address;
     this.is_closed = is_closed;
     this.open = open;
@@ -87,6 +88,23 @@ class Order {
   setShippedDate(date) {
     this.shipped = date;
   }
+
+  printDetail() {
+    for (let i = 0; i < this.lineItems.length; i++) {
+      console.log(
+        "รายการสินค้าที่ : " + (i + 1) + " " + this.lineItems[i].getProduct()
+      );
+    }
+    this.setTotal();
+    console.log("ราคารวมทั้งสิ้น : " + this.total + " บาท");
+    console.log(
+      "ชำระวันที่ : " +
+        this.payment.paid +
+        " จำนวน : " +
+        this.payment.total +
+        " บาท"
+    );
+  }
 }
 
 class Payment {
@@ -107,6 +125,20 @@ class LineItem {
 
   setProduct(product) {
     this.product = product;
+  }
+
+  getProduct() {
+    return (
+      this.product.name +
+      " จำนวน : " +
+      this.quantity +
+      " รายการ  ราคา : " +
+      this.calcSubTotal()
+    );
+  }
+
+  calcSubTotal() {
+    return this.quantity * this.price;
   }
 }
 
@@ -219,19 +251,22 @@ const main = () => {
   user1.setCustomer(cus1);
   user2.setCustomer(cus2);
 
+  // Use Function in Order Class
+  order1.setTotal();
+
   // Create Payment and Set to Order
   const payment1 = new Payment("P01", "2024/01/22", order1.total, "Deliveried");
   order1.setPayment(payment1);
 
-  // Use Function in Order Class
-  order1.setTotal;
-
   // Set shipped date in Order Class
   order1.setShippedDate("2024/01/22");
 
-  console.log(user1);
-  console.log(user1.customer);
-  console.log(user1.shoppingCart);
-  console.log(user1.shoppingCart.lineItems);
+  // Create Account
+  const account1 = new Account("Kay", "Kay_House", false, "2024/01/05", "");
+  account1.addOrder(order1);
+  account1.addOrder(order2);
+  console.log("ชื่อ : " + account1.id);
+  console.log("จำนวนคำสั่งซื้อ : " + account1.orders.length + " รายการ");
+  order1.printDetail();
 };
 main();
