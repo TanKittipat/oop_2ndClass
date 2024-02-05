@@ -303,9 +303,9 @@ const main = () => {
   account1.setShoppingCart(shoppingCart1);
 
   // Log OrderDetail
-  // console.log("ชื่อ : " + account1.id);
-  // console.log("จำนวนคำสั่งซื้อ : " + account1.orders.length + " รายการ");
-  // account1.printOrder();
+  console.log("ชื่อ : " + account1.id);
+  console.log("จำนวนคำสั่งซื้อ : " + account1.orders.length + " รายการ");
+  account1.printOrder();
 
   // Log ShoppingCart
   console.log("ชื่อ : " + account1.id);
