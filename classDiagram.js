@@ -55,10 +55,17 @@ class Account {
   }
 
   printOrder() {
+    let orderTotal = 0;
     for (let i = 0; i < this.orders.length; i++) {
       console.log("คำสั่งซื้อที่ : " + (i + 1));
       this.orders[i].printDetail();
+      orderTotal += this.orders[i].total;
     }
+    console.log("ใช้จ่ายทั้งสิ้น " + orderTotal + " บาท");
+  }
+
+  printShoppingCart() {
+    this.shoppingCart.printDetail();
   }
 }
 
@@ -158,6 +165,24 @@ class ShoppingCart {
   addLineItem(lineItem) {
     this.lineItems.push(lineItem);
   }
+
+  calcTotal() {
+    let total = 0;
+    for (let i = 0; i < this.lineItems.length; i++) {
+      total += this.lineItems[i].quantity * this.lineItems[i].price;
+    }
+    this.total = total;
+  }
+
+  printDetail() {
+    for (let i = 0; i < this.lineItems.length; i++) {
+      console.log(
+        "รายการสินค้าที่ : " + (i + 1) + " " + this.lineItems[i].getProduct()
+      );
+    }
+    this.calcTotal();
+    console.log("ราคารวมทั้งสิ้น : " + this.total + " บาท");
+  }
 }
 
 class Product {
@@ -247,8 +272,8 @@ const main = () => {
   // Add Line Item to Shopping Cart
   shoppingCart1.addLineItem(line1);
   shoppingCart1.addLineItem(line2);
-  shoppingCart2.addLineItem(line3);
-  shoppingCart2.addLineItem(line4);
+  shoppingCart1.addLineItem(line3);
+  shoppingCart1.addLineItem(line4);
 
   // Set Shopping Cart to User
   user1.setShoppingCart(shoppingCart1);
@@ -275,8 +300,20 @@ const main = () => {
   const account1 = new Account("Kay", "Kay_House", false, "2024/01/05", "");
   account1.addOrder(order1);
   account1.addOrder(order2);
+  account1.setShoppingCart(shoppingCart1);
+
+  // Log OrderDetail
+  // console.log("ชื่อ : " + account1.id);
+  // console.log("จำนวนคำสั่งซื้อ : " + account1.orders.length + " รายการ");
+  // account1.printOrder();
+
+  // Log ShoppingCart
   console.log("ชื่อ : " + account1.id);
-  console.log("จำนวนคำสั่งซื้อ : " + account1.orders.length + " รายการ");
-  account1.printOrder();
+  console.log(
+    "จำนวนรายการสินค้าที่เลือก : " +
+      account1.shoppingCart.lineItems.length +
+      " รายการ"
+  );
+  account1.printShoppingCart();
 };
 main();
